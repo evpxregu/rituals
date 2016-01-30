@@ -22,9 +22,11 @@ func _fixed_process( delta ) :
 	var attempts = 4
 	
 	while(is_colliding() and attempts > 0 ):
-		
+		var collidingWith =  get_collider()
+		print(collidingWith.get_type())
 		motion = get_collision_normal().slide( motion )
 		attempts -= 1
 
 func _ready():
 	set_fixed_process( true )
+	
