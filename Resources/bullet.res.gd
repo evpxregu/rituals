@@ -1,14 +1,17 @@
 extends Node2D
 
-const SPEED = 220
+const SPEED = 80
+var rotat
+var motion = Vector2(0,1)
 
 func _process(delta):
-	var motion = Vector2()
-	var pos = get_pos()
-	pos += motion*delta*SPEED
 	
-	set_pos(pos)
-	
+	move_local_y(delta * SPEED)
 
 func _ready():
 	set_process(true)
+
+
+func set_motion(newMotion):
+	motion = newMotion
+	

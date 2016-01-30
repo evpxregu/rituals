@@ -20,7 +20,7 @@ func _fixed_process(delta):
 		
 	move( direction * speed * delta)
 	if is_colliding():
-		print("Collision with ",get_collider())
+		#print("Collision with ",get_collider())
 		var n = get_collision_normal()
 		direction = n.slide( direction )
 		move(direction*speed*delta)
