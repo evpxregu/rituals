@@ -1,14 +1,16 @@
-extends Node2D
+extends KinematicBody2D
 
-const SPEED = 220
+const SPEED = 1000
+var Origin
 
-func _process(delta):
-	var motion = Vector2()
-	var pos = get_pos()
-	pos += motion*delta*SPEED
-	
-	set_pos(pos)
-	
+func _fixed_process(delta):
+	move_local_y(delta * SPEED)
+	if(abs(self.get_pos().distance_to(Origin)) > 5000):
+		self.queue_free()
+	if(is_colliding()):
+		print(123)
+		self.queue_free()
 
 func _ready():
-	set_process(true)
+	set_fixed_process(true)
+	Origin = get_pos()
