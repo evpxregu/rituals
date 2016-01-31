@@ -29,7 +29,7 @@ func _fixed_process( delta ):
 		newBullet.set_rot(dirToShoot)
 		newBullet.move_local_y(30)
 		newBullet.move_local_x(30)
-		get_parent().add_child(newBullet)
+		get_parent().find_node(weapon+"Bullets").add_child(newBullet)
 		
 	rotate(-Input.get_joy_axis(0,JOY_ANALOG_1_X) / 20)
 	
@@ -41,9 +41,9 @@ func _fixed_process( delta ):
 	
 	while(is_colliding() and attempts > 0 ):
 		var collidingWith =  get_collider()
-		#if(collidingWith.get_parent().get_name() == "EnemyBullets"):
-		#	self.queue_free()
-		#	collidingWith.queue_free()
+		if(collidingWith.get_parent().get_name() == "EnemyBullets"):
+			self.queue_free()
+			collidingWith.queue_free()
 			
 		
 
@@ -64,7 +64,7 @@ func _ready():
 
 	get_node("../GreenWeap").connect("body_enter",self,"_on_Green_body_enter")
 	get_node("../BlueWeap").connect("body_enter",self,"_on_Blue_body_enter")
-	get_node("../BrownWeap").connect("body_enter",self,"_on_Brown_body_enter")
+	get_node("../PurpleWeap").connect("body_enter",self,"_on_Purple_body_enter")
 	get_node("../ColorRoom").connect("body_enter",self,"_on_Room_enter")
 	get_node("../ColorRoom").connect("body_exit",self,"_on_Room_exit")
 	
@@ -80,9 +80,9 @@ func _on_Blue_body_enter(body):
 		weapon = "Blue"
 		WeaponEquipped()
 		
-func _on_Brown_body_enter(body):
+func _on_Purple_body_enter(body):
 	if(body.get_name() == "hero"):
-		weapon = "Brown"
+		weapon = "Purple"
 		WeaponEquipped()
 
 func _on_Room_enter(body):

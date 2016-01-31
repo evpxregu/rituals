@@ -6,7 +6,7 @@ const shootSpeed = 1
 
 func _fixed_process( delta ):
 	var motion = Vector2(0,0)
-	var heroObject = get_node("../hero")
+	var heroObject = get_node("../../hero")
 	if(heroObject != null):
 		var newAngle = self.get_pos().angle_to_point(heroObject.get_pos())
 		
@@ -15,13 +15,13 @@ func _fixed_process( delta ):
 			lastShot = 0
 			var bulletScene = preload("res://bullet.scn")
 			var newBullet = bulletScene.instance()
-			
+			 
 			newBullet.set_pos(self.get_pos())
 			newBullet.look_at(heroObject.get_pos())
 			newBullet.move_local_y(30)
 			newBullet.move_local_x(30)
 			
-			get_parent().find_node("EnemyBullets").add_child(newBullet,true)
+			get_parent().get_parent().find_node("EnemyBullets").add_child(newBullet,true)
 		
 		self.set_rot(newAngle + 0.5 * 3.14)
 		
@@ -31,7 +31,7 @@ func _fixed_process( delta ):
 	
 	while(is_colliding() and attempts > 0 ):
 		var collidingWith =  get_collider()
-		if(collidingWith.get_parent().get_name() == "Bullets"):
+		if(collidingWith.get_parent().get_name() == get_parent().get_name() + "Bullets"):
 			self.queue_free()
 			collidingWith.queue_free()
 			
