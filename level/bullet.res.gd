@@ -1,14 +1,12 @@
 extends KinematicBody2D
 
-const SPEED = 1000
+const SPEED = 10
 var Origin
 
 func _fixed_process(delta):
-	move_local_y(delta * SPEED)
-	if(abs(self.get_pos().distance_to(Origin)) > 5000):
-		self.queue_free()
-	if(is_colliding()):
-		print(123)
+	var direction = Vector2(cos(get_rot()), -sin(get_rot()))
+	move(direction * SPEED)
+	if(is_colliding() && get_collider().get_name().find("Bullet") == -1):
 		self.queue_free()
 
 func _ready():

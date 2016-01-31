@@ -18,15 +18,12 @@ func _fixed_process( delta ):
 			
 			newBullet.set_pos(self.get_pos())
 			newBullet.look_at(heroObject.get_pos())
-			newBullet.move_local_y(20)
-			newBullet.move_local_x(-30)
-			# rad2deg
-			print(get_rot())
+			newBullet.move_local_y(30)
+			newBullet.move_local_x(30)
 			
-			#newBullet.set_motion(self.get_rot())
 			get_parent().find_node("EnemyBullets").add_child(newBullet,true)
 		
-		self.set_rot(newAngle)
+		self.set_rot(newAngle + 0.5 * 3.14)
 		
 	motion = move( motion )
 	

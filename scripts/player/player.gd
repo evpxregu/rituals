@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-const SPEED = 800
+const SPEED = 400
 
 #Current weapon
 var weapon = "null"
@@ -9,8 +9,6 @@ var InsideColorRoom = true
 
 func _fixed_process( delta ):
 	var motion = Vector2()
-	if(is_colliding()):
-		print("RICK IS DOM")
 	
 	if(Input.is_action_pressed("move_up")):
 		motion += Vector2( 0, -1 )
@@ -29,9 +27,9 @@ func _fixed_process( delta ):
 		
 		newBullet.set_pos(self.get_pos())
 		newBullet.set_rot(dirToShoot)
-		newBullet.move_local_y(45)
-		newBullet.move_local_x(-20)
-		get_parent().find_node("Bullets").add_child(newBullet)
+		newBullet.move_local_y(30)
+		newBullet.move_local_x(30)
+		get_parent().add_child(newBullet)
 		
 	rotate(-Input.get_joy_axis(0,JOY_ANALOG_1_X) / 20)
 	
@@ -73,26 +71,27 @@ func _ready():
 	cam = get_node("Camera2D")
 	
 func _on_Green_body_enter(body):
-	weapon = "Green"
-	WeaponEquipped()
+	if(body.get_name() == "hero"):
+		weapon = "Green"
+		WeaponEquipped()
 		
 func _on_Blue_body_enter(body):
-	weapon = "Blue"
-	WeaponEquipped()
+	if(body.get_name() == "hero"):
+		weapon = "Blue"
+		WeaponEquipped()
 		
 func _on_Brown_body_enter(body):
-	weapon = "Brown"
-	WeaponEquipped()
+	if(body.get_name() == "hero"):
+		weapon = "Brown"
+		WeaponEquipped()
 
 func _on_Room_enter(body):
-	if(body.get_name() != "hero"):
-		return
-	InsideColorRoom = true
+	if(body.get_name() == "hero"):
+		InsideColorRoom = true
 
 func _on_Room_exit(body):
-	if(body.get_name() != "hero"):
-		return
-	InsideColorRoom = false
+	if(body.get_name() == "hero"):
+		InsideColorRoom = false
 
 func WeaponEquipped():
 	print(weapon + " weapon equipped")
